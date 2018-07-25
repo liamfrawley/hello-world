@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- bootstrap reference used for styling the page -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <title>ECM OneDrive Integration</title>
+ 
+    <script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>
+</head>
+<body style="margin: 40px">
+<script type="text/javascript">
+  function launchOneDrivePicker(){
+	var odOptions = {
+	  clientId: "366db5dc-6add-4acd-adf4-89fd5a608d4d",
+	  action: "query",
+	  multiSelect: true,
+	  openInNewWindow: false,
+	  advanced: {
+		endpointHint: "api.onedrive.com",
+		accessToken: "EwBYA8l6BAAURSN/FHlDW5xN74t6GzbtsBBeBUYAAYaXmmcef5srFX2vl7Cahe9wQrk0zE6kriPcWix3h/9RVMraBZLQWtRkoFyQ23cbI8aRfX+vIw0t3ovNBSFNLVuW2V8S+tfaqRoIygtUcSC/2vjLv8/0wtNKmWZMZ/FGQow1s6dF7IHrVsnaYU6TUBGMYKhYWo2297q1dzLcubUKw6vLxFbc54xj0Hi8xtRcAAyvhsBZjyZei4Gq3OzLIQCdPRRGwjCYBVlowTGEj0Gcnjjw62SqNAuvvrRaF9GITzvBzbKJq3qT2Jxgv3SBDgXJ/jAY6pK1qKagcNtRAnZF3sDr/uaGcV1mxXYt/Ni61FOm4pd917T6pPanec3IHgEDZgAACCjM8I1XZdUIKAJY4bRoYIYyHjAgay/yneEAS4zP6Siq38t2FU3jXXVeorT4i1bO2tx/rgpS8SBQy5dawWCkcwSDhd9VJd5hWz97Il9+jrBOsQtvUHvTf0pKnVCuj2yzPxJhmqFJ/Xs6HqcMXNIESkeoBgdMjozl0HvAZvMoYOhOJeASEea+CLEIcMzk7DVFzkADOzDXd6SDl4av+u7N9h6kSAtfU7wgn97+2nuJ2PSL2KP4jM+Jy/EsZ7jzOXsXHblZFHvUnPhjQ1tM3oZwLllvj88DfTZ3cNZrE5M2DQvXF9nO1JW5r1oy898q4BY9QFaFDa9+9Ja5zzxuvKL+wwve/i3zSNDVhwo0RDxyGYhpZCGftW0GW2Mgs3uQGL14rh6n4NXd47GiA2VYG8pH9rtZbhzitDfNYa3H5CQFwTi3L/Sus8cVchSInJR7Cr3//Kfgwg5VwFSDkxYhRH6pIzqaZgqTp2wq9L0AMU0o7far/194lG/sQqh+AZN2vw9DBgOZP0jOb+EpE4Rn5RF0+qVG8F2Q5oELhicKg3J1yINlW8XcOssysDys47jkgvQqckm6P+3poelLBdzx1DHoZlN4W9+eBIN8Lv9MamBTV8yQljmywHkcmQGTwMN83KGoHqIAVng6rgQeDuy5KIHrQET7vFTvD+uwqNtY6zN/Qhf7WI5S6UPcQlMPUk9AOZNN0spqFSCK49LkbW1EA/UR6FLwo4QClxd1jlHSAR8PMl1c9GtoAg=="
+	  },
+	  success: function(files) { 
+	  alert("hello");
+	  },
+	  cancel: function() { alert("cancel"); },
+	  error: function(e) { alert("error: " + e.error_description); }
+	}
+    OneDrive.open(odOptions);
+  }
+</script>
+<button onClick="launchOneDrivePicker()">Open from OneDrive</button>
+</body>
+</html>
