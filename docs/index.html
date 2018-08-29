@@ -2,39 +2,94 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-    <!-- bootstrap reference used for styling the page -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <title>ECM OneDrive Integration</title>
  
-    <script type="text/javascript">
+	<script language="Javascript" type="text/javascript">
+        function CallParent()
+        {
+            alert("Alert from Parent window");
+        }
+    </script>
+	
+	<script type="text/javascript">
  
+		var debugFunction = 
+			function () {
+			  alert("hello world!");
+		    }
+			
 		var oneDriveFilePickerError = 
 			function ( e ) {
-			  alert("hello error");
+			  alert("hello error: " + e);
 			  console.log( 'OneDrive Launch Failed!' );
 			}
+
 			var oneDriveFilePickerSuccess = 
 			function ( files ) {
-			  alert("hello success");
-			  console.log( 'OneDrive Launch Success!' );
+			    var fileDataElement = document.getElementById("fileData");
+				fileDataElement.parentElement.classList.remove("hidden");
+				fileDataElement.innerHTML = JSON.stringify(files, null, 4);
+
 			}
+
 		var oneDriveFilePickerCancel =
 			function ( ) {
-			  alert("hello cancel");
+			  alert("hello cancel Chris");
 			  console.log( 'OneDrive Launch Cancelled!' );
 			}
+
+		function openPopup() {
+			var popup = window.open('https://liamfrawley.github.io/liamfrawley/test.html', '_blank', 'location=yes,height=1070,width=1520,scrollbars=yes,status=yes');
+			if (!popup) {
+				alert("Oops! popup is null");
+			}
+			else {
+				alert("Great! popup is not null");
+			}
+		}
+		
+		function myFunc()
+		{
+			alert("in myFunc()");
+		}
+		
+		function testJS()
+		{
+			alert(window.myfunc() + " " + window.myval);
+			
+		}
     </script>
 
-    <script type="text/javascript" src="OneDrive.debug.js"></script>
+    <script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>
+<!--    <script type="text/javascript" src="http://localhost/OneDrive.debug-original.js"></script>-->
+	
+	<style>
+h1 {
+    background-color: green;
+}
+
+div {
+    background-color: lightblue;
+}
+
+p {
+    background-color: yellow;
+}
+</style>
 </head>
 <body style="margin: 40px">
+<div>
     <button id="callGraphButton" type="button" class="btn btn-primary" onclick="callGraphApi()">Call Microsoft Graph API</button>
  
     <button id="opeDrive" type="button" class="btn btn-primary" onclick="launchOneDrivePicker()">Go To OneDrive</button>
  
     <button id="signOutButton" type="button" class="btn btn-primary hidden" onclick="signOut()">Sign out</button>
+
+    <button id="foo" type="button" class="btn btn-primary" onclick="openPopup()">Open Popout</button>
+    <button id="foo" type="button" class="btn btn-primary" onclick="testJS()">Test JS</button>
 	
-    <div id="errorMessage" class="text-danger"></div>
+   <div id="errorMessage" class="text-danger"></div>
     <div class="hidden">
         <h3>Graph API Call Response</h3>
         <pre class="well" id="graphResponse"></pre>
@@ -47,15 +102,15 @@
         <h3>ID Token Claims</h3>
         <pre class="well" id="userInfo"></pre>
     </div>
+    <div class="hidden">
+        <h3>File JSON data</h3>
+        <pre class="well" id="fileData"></pre>
+    </div>
      
  
-    <!-- This app uses cdn to reference msal.js (recommended).
-         You can also download it from: https://github.com/AzureAD/microsoft-authentication-library-for-js -->
     <script src="https://secure.aadcdn.microsoftonline-p.com/lib/0.1.5/js/msal.min.js"></script>
-    <!--<script type="text/javascript" src="msal.js"></script>-->
     <script type="text/javascript" src="msalconfig.js"></script>
  
-    <!-- The 'bluebird' and 'fetch' references below are required if you need to run this application on Internet Explorer -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
  
@@ -65,18 +120,24 @@
     <script type="text/javascript">
  
 		function launchOneDrivePicker() {
+			var advancedOptions = {
+				accessToken: 'EwBgA8l6BAAURSN/FHlDW5xN74t6GzbtsBBeBUYAAdCWAZEyCzqZ0whX11Xgm5n7dmM21817BQYtWQw+i3lYTRMfpcSbc9Xau2x40KTFEddToRMM69h5pOQBqpRBfDuXXPLWuqKp4BhA3bxRj7A/Try/qA2HBlXNDjfwkvtoRU2jXyN1zvlDxqshaO4oTiah3pnPUrU3Xq/bNsEYYJKyNOHhRrc6Bfj/BV5WiYhZe+nYSd/cZOqAhhBxk7ATTEv2vyqDa6znWlT1m82dhqfkIQ1l6A6QIFkW2HZsaRQXu9LgI3QvZM+DoveI0+FyTus8SsxnLco64xBP+go/g6ckQPCxXSLQO7FL6jwfO6QBxlydt2dd0+OAmCP/eNjdHwoDZgAACBg8Wzzk4USgMAKfWA6a5LL67fkOYMExBjrBImOhIO6K/dJnsZLfwMHxgKtDqegTymuINxF85zBVXwQ/1kzxTZ6YXY2PIwVE19rKwP0/ywzaEzUF10dzMHpUq42ynI5ThkcEQTFfH2lONjumY5RXVR+NN1xaOqcBM9Y9gq5tH/b1ya2pvPtE3uLWzVUE+LNFVy5YR3FSYd8Y1mjy9vmT3sfIDUrcbK/o8SuwRB+2p8meL/6BZZNroLq2U0w509gyFW4UmgHNjf2ztcRhS8AugP7sFgfCJIzZ/QgUpQz/eI3TnbgcctvnVMywCyMtvi3GyDNcnEEzwYwbn0dnT5uvZ0DqX6OZuuQ5Ou8hGYqaPTuhb5PyP59Pn8UiF2sWvIkwIQSzF+3TOuuRKtoKHkmXZ81z+Kl+EbnstxOOTkTsdMSphx3XN0+VyKJISsKcPcWWBX4R4n/l0hRQwPq7f2E3Hhzjanm5G2GZ2vl5VO2y8WS5gAp+I0XzhenPkGuV15MqbXtDsRZaMQ8ZFJLv/shENJ3A79QST1p0ON65E64pvtE+i4tG0NzVlWcbmzslE6ShB1XJWlA0uGKRPbS57HFI2RYfVqOVN+w2Us4prHngDGwTkgKbrXjJFYpiYjjB9i6Gx6TfQAhxq+DoKAycVy8uTiDqRKn7O55JnGwOjUmZsQaq0vGiUTcq5ENaRpvR6d9kgiS2yyLE+x98JSpsNPG1Rf6pFeY+T0fcybXUDswxtbezEE16lYRBbromtnEC',
+				redirectUri: "https://liamfrawley.github.io/liamfrawley/",
+				endpointHint: "api.onedrive.com"
+			};
 			var odOptions = {
+				advanced: advancedOptions,
 				clientId: '366db5dc-6add-4acd-adf4-89fd5a608d4d',
 				action: "query",
-				openInNewWindow: false,
 				success: oneDriveFilePickerSuccess,
 				cancel: oneDriveFilePickerCancel,
-				error: oneDriveFilePickerError,
-				redirectUri: "https://liamfrawley.github.io/liamfrawley/"
+				error: oneDriveFilePickerError
 			};
+
 			OneDrive.open( odOptions );
 		}
 	
     </script>
+</div>
 </body>
 </html>
