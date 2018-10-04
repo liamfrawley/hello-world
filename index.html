@@ -13,24 +13,19 @@
 			  alert("hello error");
 			  console.log( 'OneDrive Launch Failed!' );
 			}
-
 			var oneDriveFilePickerSuccess = 
 			function ( files ) {
 			  alert("hello success");
 			  console.log( 'OneDrive Launch Success!' );
 			}
-
 		var oneDriveFilePickerCancel =
 			function ( ) {
 			  alert("hello cancel");
 			  console.log( 'OneDrive Launch Cancelled!' );
 			}
-
     </script>
 
-    <!--<script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>-->
-	<script type="text/javascript" src="OneDrive.debug.js"></script>
-	
+    <script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>
 </head>
 <body style="margin: 40px">
     <button id="callGraphButton" type="button" class="btn btn-primary" onclick="callGraphApi()">Call Microsoft Graph API</button>
@@ -80,9 +75,9 @@
 				openInNewWindow: true,
 				success: 'oneDriveFilePickerSuccess',
 				cancel: 'oneDriveFilePickerCancel',
-				error: 'oneDriveFilePickerError'
+				error: 'oneDriveFilePickerError',
+				redirectUri: "https://liamfrawley.github.io/liamfrawley/"
 			};
-
 			OneDrive.open( odOptions );
 		}
 	
