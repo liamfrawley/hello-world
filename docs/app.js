@@ -13,7 +13,7 @@ var userAgentApplication = new Msal.UserAgentApplication(msalconfig.clientID, nu
 if (userAgentApplication.redirectUri) {
     userAgentApplication.redirectUri = msalconfig.redirectUri;
 }
-alert(redirectUri);
+//alert(redirectUri);
  
 window.onload = function () {
     // If page is refreshed, continue to display user info
