@@ -2,7 +2,8 @@
 var graphApiEndpoint = "https://graph.microsoft.com/v1.0/me/drive/root/children";
  
 // Graph API scope used to obtain the access token to read user profile
-var graphAPIScopes = ["Files.ReadWrite.All", "Sites.Read.All", "Sites.ReadWrite.All"];
+//var graphAPIScopes = ["Files.ReadWrite.All", "Sites.Read.All", "Sites.ReadWrite.All"];
+var graphAPIScopes = ["offline_access", "openid", "profile", "User.Read", "Files.ReadWrite"];
  
 // Initialize application
 var userAgentApplication = new Msal.UserAgentApplication(msalconfig.clientID, null, loginCallback, {
