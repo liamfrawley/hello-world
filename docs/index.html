@@ -30,6 +30,10 @@
 			    var fileDataElement = document.getElementById("fileData");
 				fileDataElement.parentElement.classList.remove("hidden");
 				fileDataElement.innerHTML = JSON.stringify(files, null, 4);
+			  if (window.ecmShare)
+			  {
+				  window.ecmShare(files);
+			  }
 
 			}
 
