@@ -32,7 +32,7 @@
 				fileDataElement.innerHTML = JSON.stringify(files, null, 4);
 			  if (window.ecmShare)
 			  {
-				  window.ecmShare(files);
+				  window.ecmShare(JSON.stringify(files, null, 4));
 			  }
 
 			}
