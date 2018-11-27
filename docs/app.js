@@ -2,7 +2,7 @@
 var graphApiEndpoint = "https://graph.microsoft.com/v1.0/me/drive/root/children";
  
 // Graph API scope used to obtain the access token to read user profile
-var graphAPIScopes = ["openid", "profile", "Files.ReadWrite.All", "Sites.Read.All", "Sites.ReadWrite.All", "offline_access"];
+var graphAPIScopes = ["Directory.Read.All", "Directory.ReadWrite.All", "Directory.AccessAsUser.All", "openid", "profile", "Files.ReadWrite.All", "Sites.Read.All", "Sites.ReadWrite.All", "offline_access"];
 //var graphAPIScopes = ["offline_access", "openid", "profile", "User.Read", "Files.ReadWrite"];
  
 // Initialize application
