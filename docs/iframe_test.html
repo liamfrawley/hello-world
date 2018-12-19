@@ -3,12 +3,20 @@
 <body>
 
 <h2>Test Iframe</h2>
-<p>This is a test page!</p>
+<p>This is a test page!!!</p>
 <script>
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
 function myFunction() {
 	alert("hello");
+	//window.location.href = 'https://www.rte.ie';
 }
-</script>
+
+sleep(3000).then(() => {
+  window.location.href = 'https://www.rte.ie';
+})
 
 <button onclick="myFunction()">Tell parent to navigate</button>
 
