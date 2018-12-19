@@ -2,23 +2,10 @@
 <html>
 <body>
 
-<h2>Test Iframe</h2>
-<p>This is a test page!!!!</p>
-<script>
-const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
+<h2>Iframe Parent Page</h2>
+<p>This page contains an iframe below</p>
 
-function myFunction() {
-	alert("hello");
-}
-
-sleep(3000).then(() => {
-  window.parent.location = 'http://www.stickybottle.com/';
-})
-</script>
-
-<button onclick="myFunction()">Tell parent to navigate</button>
+<iframe src="https://www.rte.ie/" height="400" width="400" frameborder="2"></iframe>
 
 </body>
 </html>
