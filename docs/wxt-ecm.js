@@ -77,6 +77,7 @@ function getOptions(clientId, loginHint, isConsumerAccount, action) {
         action: action,
         multiSelect: true,
         openInNewWindow: true,
+        viewType: "folders"
         success: function(files) {
             oneDriveFilePickerSuccess(files);
         },
