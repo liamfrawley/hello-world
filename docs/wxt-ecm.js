@@ -70,14 +70,45 @@ var oneDriveFilePickerCancel =
             ECMExtensions.ecmCancel();
         }
     }
-function getOptions(clientId, loginHint, isConsumerAccount, action) {
+function getOptions(clientId, loginHint, isConsumerAccount, action, folderPicker) {
+    if(folderPicker === true) {
+    var odOptions = {
+        clientId: clientId,
+        accountSwitchEnabled: false,
+        action: action,
+        multiSelect: false,
+        openInNewWindow: true,
+        viewType: "folders",
+        success: function(files) {
+            oneDriveFilePickerSuccess(files);
+        },
+        cancel: function() {
+            oneDriveFilePickerCancel();
+        },
+        error: function(e) {
+            oneDriveFilePickerError(e);
+        },
+        redirectUri: window.location.href,
+        advanced: {
+            queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds",
+            navigation: {
+                sourceTypes: ["OneDrive", "Sites"]
+            }
+        }
+    };
+    if(typeof loginHint !== "undefined" && typeof isConsumerAccount !== "undefined") {
+        odOptions.advanced.loginHint = loginHint;
+        odOptions.advanced.isConsumerAccount = isConsumerAccount;
+    }
+    return odOptions;
+    }
+        
     var odOptions = {
         clientId: clientId,
         accountSwitchEnabled: false,
         action: action,
         multiSelect: true,
         openInNewWindow: true,
-        viewType: "folders",
         success: function(files) {
             oneDriveFilePickerSuccess(files);
         },
@@ -103,6 +134,12 @@ function getOptions(clientId, loginHint, isConsumerAccount, action) {
 }
 function launchOneDrivePicker(clientId, loginHint, isConsumerAccount, action) {
     action = action || "query";
-    var odOptions = getOptions(clientId, loginHint, isConsumerAccount, action);
+    var odOptions = getOptions(clientId, loginHint, isConsumerAccount, action, false);
+    OneDrive.open( odOptions );
+}
+
+function launchOneDriveFolderPicker(clientId, loginHint, isConsumerAccount, action) {
+    action = action || "query";
+    var odOptions = getOptions(clientId, loginHint, isConsumerAccount, action, true);
     OneDrive.open( odOptions );
 }
